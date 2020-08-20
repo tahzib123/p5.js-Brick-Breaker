@@ -83,7 +83,6 @@ function ballCollidesWithPaddle(){
   
   if(ballYPos === paddleYPos && (ballXPos <=  paddleXPos + paddleWidth && ballXPos >=paddleXPos)){
     
-    ballXSpeed *= -1;
     ballYSpeed *= -1;
   }
 }
