@@ -15,11 +15,15 @@ let numOfRows = 10;
 let bricksPerRow = 10;
 let brickWidth = canvasWidth / bricksPerRow;
 let colors;
+let playerScore = 0;
+let button;
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   background(0);
   colors = createColors();
   bricks = createBricks();
+  textSize(32);
 }
 
 
@@ -37,6 +41,9 @@ function draw()
     moveBall();
     respawn();
     ballCollidesWithBrick();
+    textSize(22);
+    text(`Score: ${playerScore}`,0,canvasHeight - 10);
+    text(`Lives: ${lives}`,canvasWidth-75,canvasHeight - 10);
 }
 
 function moveBall(){
@@ -95,6 +102,7 @@ function ballCollidesWithBrick(){
       bricks.splice(i,1);
       ballXSpeed *= -1
       ballYSpeed *= -1;
+      playerScore++;
     }else{
       brick.display();
     }
@@ -118,12 +126,25 @@ function respawn(){
 
 function gameOver(){
   if(lives <= 0){
-    text('Game Over' , 0, 0);
+    textSize(32);
+    fill(255);
+    textSize(44);
+    text(`GAME OVER`,canvasWidth/2 - 150,canvasHeight/2);
+    button = createButton('Try Again');
+    button.position(canvasWidth/2, canvasHeight/2);
+    button.mousePressed(restart);
     ballXSpeed = 0;
     ballYSpeed = 0;
   };
 }
 
+function restart(){
+  playerScore = 0;
+  lives = 3;
+  ballXSpeed = 5;
+  ballYSpeed = 5;
+  bricks = createBricks();
+}
 
 function createBricks(){
   for(let i = 0; i < numOfRows; i++){
